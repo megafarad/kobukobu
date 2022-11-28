@@ -32,6 +32,7 @@ class InitialStateSerializer < ActiveModel::Serializer
       activity_api_enabled: Setting.activity_api_enabled,
       single_user_mode: Rails.configuration.x.single_user_mode,
       translation_enabled: TranslationService.configured?,
+      kobukobu_enabled: KobukobuService.configured?,
     }
 
     if object.current_account

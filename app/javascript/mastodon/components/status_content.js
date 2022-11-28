@@ -6,9 +6,24 @@ import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
 import Icon from 'mastodon/components/icon';
-import { autoPlayGif, languages as preloadedLanguages, translationEnabled } from 'mastodon/initial_state';
+import { autoPlayGif, languages as preloadedLanguages, translationEnabled, kobukobuEnabled } from 'mastodon/initial_state';
 
 const MAX_HEIGHT = 706; // 22px * 32 (+ 2px padding at the top)
+
+class KobuKobuButton extends React.PureComponent {
+  static propTypes = {
+    kobukobu: ImmutablePropTypes.map,
+    onClick: PropTypes.func,
+  };
+
+  render() {
+    const { kobukobu, onClick } = this.props;
+
+    if (kobukobu) {
+
+    }
+  }
+}
 
 class TranslateButton extends React.PureComponent {
 

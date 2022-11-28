@@ -39,6 +39,11 @@ export const STATUS_TRANSLATE_SUCCESS = 'STATUS_TRANSLATE_SUCCESS';
 export const STATUS_TRANSLATE_FAIL    = 'STATUS_TRANSLATE_FAIL';
 export const STATUS_TRANSLATE_UNDO    = 'STATUS_TRANSLATE_UNDO';
 
+export const STATUS_KOBUKOBU_REQUEST = 'STATUS_KOBUKOBU_REQUEST';
+export const STATUS_KOBUKOBU_SUCCESS = 'STATUS_KOBUKOBU_SUCCESS';
+export const STATUS_KOBUKOBU_FAIL    = 'STATUS_KOBUKOBU_FAIL';
+export const STATUS_KOBUKOBU_UNDO    = 'STATUS_KOBUKOBU_UNDO';
+
 export function fetchStatusRequest(id, skipLoading) {
   return {
     type: STATUS_FETCH_REQUEST,
@@ -347,3 +352,37 @@ export const undoStatusTranslation = id => ({
   type: STATUS_TRANSLATE_UNDO,
   id,
 });
+
+export const kobukobuStatus = id => (dispatch, getState) => {
+  dispatch(kobukobuStatusRequest(id));
+
+  api(getState).post(`/api/v1/statuses/${id}/kobukobu`).then(response => {
+    dispatch(kobukobuStatusSuccess(id, response.data));
+  }).catch(error => {
+    dispatch(kobukobuStatusFail(id, error));
+  });
+};
+
+export const kobukobuStatusRequest = id => ({
+  type: STATUS_KOBUKOBU_REQUEST,
+  id,
+});
+
+export const kobukobuStatusSuccess = (id, kobukobu) => ({
+  type: STATUS_KOBUKOBU_SUCCESS,
+  id,
+  kobukobu,
+});
+
+export const kobukobuStatusFail = (id, error) => ({
+  type: STATUS_KOBUKOBU_FAIL,
+  id,
+  error
+});
+
+export const undoKobukobu = id => ({
+  type: STATUS_KOBUKOBU_UNDO,
+  id
+});
+
+
