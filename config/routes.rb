@@ -451,6 +451,7 @@ Rails.application.routes.draw do
           resource :source, only: :show
 
           post :translate, to: 'translations#create'
+          post :kobukobu, to: 'kobukobu#create'
         end
 
         member do
