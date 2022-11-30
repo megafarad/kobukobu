@@ -35,6 +35,8 @@ import {
   revealStatus,
   translateStatus,
   undoStatusTranslation,
+  kobukobuStatus,
+  undoStatusKobukobu
 } from '../../actions/statuses';
 import {
   unblockAccount,
@@ -409,6 +411,16 @@ class Status extends ImmutablePureComponent {
     }
   }
 
+  handleKobukobu = status => {
+    const { dispatch } = this.props;
+
+    if (status.get('kobukobu')) {
+      dispatch(undoStatusKobukobu(status.get('id')));
+    } else {
+      dispatch(kobukobuStatus(status.get('id')));
+    }
+  }
+
   handleBlockClick = (status) => {
     const { dispatch } = this.props;
     const account = status.get('account');
@@ -640,6 +652,7 @@ class Status extends ImmutablePureComponent {
                   onOpenMedia={this.handleOpenMedia}
                   onToggleHidden={this.handleToggleHidden}
                   onTranslate={this.handleTranslate}
+                  onKobukobu={this.handleKobukobu}
                   domain={domain}
                   showMedia={this.state.showMedia}
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}

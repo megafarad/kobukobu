@@ -15,6 +15,8 @@ import {
   STATUS_COLLAPSE,
   STATUS_TRANSLATE_SUCCESS,
   STATUS_TRANSLATE_UNDO,
+  STATUS_KOBUKOBU_SUCCESS,
+  STATUS_KOBUKOBU_UNDO,
   STATUS_FETCH_REQUEST,
   STATUS_FETCH_FAIL,
 } from '../actions/statuses';
@@ -89,6 +91,10 @@ export default function statuses(state = initialState, action) {
     return state.setIn([action.id, 'translation'], fromJS(action.translation));
   case STATUS_TRANSLATE_UNDO:
     return state.deleteIn([action.id, 'translation']);
+  case STATUS_KOBUKOBU_SUCCESS:
+    return state.setIn([action.id, 'kobukobu'], fromJS(action.kobukobu));
+  case STATUS_KOBUKOBU_UNDO:
+    return state.deleteIn([action.id, 'kobukobu']);
   default:
     return state;
   }

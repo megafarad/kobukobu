@@ -86,6 +86,7 @@ class Status extends ImmutablePureComponent {
     onToggleHidden: PropTypes.func,
     onToggleCollapsed: PropTypes.func,
     onTranslate: PropTypes.func,
+    onKobukobu: PropTypes.func,
     onInteractionModal: PropTypes.func,
     muted: PropTypes.bool,
     hidden: PropTypes.bool,
@@ -175,6 +176,10 @@ class Status extends ImmutablePureComponent {
 
   handleTranslate = () => {
     this.props.onTranslate(this._properStatus());
+  }
+
+  handleKobukobu = () => {
+    this.props.onKobukobu(this._properStatus());
   }
 
   renderLoadingMediaGallery () {
@@ -531,6 +536,7 @@ class Status extends ImmutablePureComponent {
               expanded={!status.get('hidden')}
               onExpandedToggle={this.handleExpandedToggle}
               onTranslate={this.handleTranslate}
+              onKobukobu={this.handleKobukobu}
               collapsable
               onCollapsedToggle={this.handleCollapsedToggle}
             />

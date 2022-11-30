@@ -16,7 +16,7 @@ class Api::V1::Statuses::KobukobuController < Api::BaseController
 
   def set_status
     @status = Status.find(params[:status_id])
-    authorize @status, :show
+    authorize @status, :show?
   rescue Mastodon::NotPermittedError
     not_found
   end
