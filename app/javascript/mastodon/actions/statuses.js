@@ -380,7 +380,7 @@ export const kobukobuStatusFail = (id, error) => ({
   error
 });
 
-export const undoKobukobu = id => ({
+export const undoStatusKobukobu = id => ({
   type: STATUS_KOBUKOBU_UNDO,
   id
 });

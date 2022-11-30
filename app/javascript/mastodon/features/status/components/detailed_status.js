@@ -38,6 +38,7 @@ class DetailedStatus extends ImmutablePureComponent {
     onOpenVideo: PropTypes.func.isRequired,
     onToggleHidden: PropTypes.func.isRequired,
     onTranslate: PropTypes.func.isRequired,
+    onKobukobu: PropTypes.func.isRequired,
     measureHeight: PropTypes.bool,
     onHeightChange: PropTypes.func,
     domain: PropTypes.string.isRequired,
@@ -107,6 +108,11 @@ class DetailedStatus extends ImmutablePureComponent {
   handleTranslate = () => {
     const { onTranslate, status } = this.props;
     onTranslate(status);
+  }
+
+  handleKobukobu = () => {
+    const { onKobukobu, status } = this.props;
+    onKobukobu(status);
   }
 
   render () {
@@ -271,6 +277,7 @@ class DetailedStatus extends ImmutablePureComponent {
             expanded={!status.get('hidden')}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}
+            onKobukobu={this.handleKobukobu}
           />
 
           {media}

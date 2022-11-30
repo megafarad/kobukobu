@@ -27,6 +27,8 @@ import {
   editStatus,
   translateStatus,
   undoStatusTranslation,
+  kobukobuStatus,
+  undoStatusKobukobu
 } from '../actions/statuses';
 import {
   unmuteAccount,
@@ -157,6 +159,14 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
       dispatch(undoStatusTranslation(status.get('id')));
     } else {
       dispatch(translateStatus(status.get('id')));
+    }
+  },
+
+  onKobukobu (status) {
+    if (status.get('kobukobu')) {
+      dispatch(undoStatusKobukobu(status.get('id')));
+    } else {
+      dispatch(kobukobuStatus(status.get('id')));
     }
   },
 

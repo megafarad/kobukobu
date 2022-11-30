@@ -20,8 +20,26 @@ class KobuKobuButton extends React.PureComponent {
     const { kobukobu, onClick } = this.props;
 
     if (kobukobu) {
+      const language = preloadedLanguages.find(lang => lang[0] === kobukobu.get('language'));
+      const languageName = language ? language[2] : kobukobu.get('language');
+      return (
+        <div className='translate-button'>
+          <div className='translate-button__meta'>
+            <FormattedMessage id='status.kobukobu_parsed' defaultMessage='Parsed {lang} courtesy of KobuKobu' values={{ lang: languageName }}/>
+          </div>
 
+          <button className='link-button' onClick={onClick}>
+            <FormattedMessage id='status.show_original' defaultMessage='Show original' />
+          </button>
+        </div>
+      );
     }
+    return (
+      <button className='status__content__read-more-button' onClick={onClick}>
+        <FormattedMessage id='status.kobukobu' defaultMessage='KobuKobu!' />
+      </button>
+    );
+
   }
 }
 
@@ -75,6 +93,7 @@ class StatusContent extends React.PureComponent {
     expanded: PropTypes.bool,
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
+    onKobukobu: PropTypes.func,
     onClick: PropTypes.func,
     collapsable: PropTypes.bool,
     onCollapsedToggle: PropTypes.func,
@@ -226,6 +245,10 @@ class StatusContent extends React.PureComponent {
     this.props.onTranslate();
   }
 
+  handleKobukobu = () => {
+    this.props.onKobukobu();
+  }
+
   setRef = (c) => {
     this.node = c;
   }
@@ -236,6 +259,7 @@ class StatusContent extends React.PureComponent {
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const renderReadMore = this.props.onClick && status.get('collapsed');
     const renderTranslate = translationEnabled && this.context.identity.signedIn && this.props.onTranslate && ['public', 'unlisted'].includes(status.get('visibility')) && status.get('contentHtml').length > 0 && status.get('language') !== null && intl.locale !== status.get('language');
+    const renderKobukobu = kobukobuEnabled && this.context.identity.signedIn && this.props.onKobukobu && ['public', 'unlisted'].includes(status.get('visibility')) && status.get('contentHtml').length > 0 && status.get('language') !== null && intl.locale !== status.get('language');
 
     const content = { __html: status.get('translation') ? status.getIn(['translation', 'content']) : status.get('contentHtml') };
     const spoilerContent = { __html: status.get('spoilerHtml') };
@@ -254,6 +278,10 @@ class StatusContent extends React.PureComponent {
 
     const translateButton = renderTranslate && (
       <TranslateButton onClick={this.handleTranslate} translation={status.get('translation')} />
+    );
+
+    const kobukobuButton = renderKobukobu && (
+      <KobuKobuButton onClick={this.handleKobukobu} kobukobu={status.get('kobukobu')} />
     );
 
     const poll = !!status.get('poll') && (
@@ -289,6 +317,7 @@ class StatusContent extends React.PureComponent {
 
           {!hidden && poll}
           {!hidden && translateButton}
+          {!hidden && kobukobuButton}
         </div>
       );
     } else if (this.props.onClick) {
@@ -299,6 +328,7 @@ class StatusContent extends React.PureComponent {
 
             {poll}
             {translateButton}
+            {kobukobuButton}
           </div>
 
           {readMoreButton}
@@ -311,6 +341,7 @@ class StatusContent extends React.PureComponent {
 
           {poll}
           {translateButton}
+          {kobukobuButton}
         </div>
       );
     }
