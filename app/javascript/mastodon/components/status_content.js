@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
 import Icon from 'mastodon/components/icon';
 import { autoPlayGif, languages as preloadedLanguages, translationEnabled, kobukobuEnabled } from 'mastodon/initial_state';
+import KobuKobuContent from "./kobukobu_content";
 
 const MAX_HEIGHT = 706; // 22px * 32 (+ 2px padding at the top)
 
@@ -313,7 +314,9 @@ class StatusContent extends React.PureComponent {
 
           {mentionsPlaceholder}
 
-          <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
+            <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />
+          }
 
           {!hidden && poll}
           {!hidden && translateButton}
@@ -324,8 +327,9 @@ class StatusContent extends React.PureComponent {
       return (
         <>
           <div className={classNames} ref={this.setRef} tabIndex='0' onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} key='status-content' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-            <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
-
+            {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
+              <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
+            }
             {poll}
             {translateButton}
             {kobukobuButton}
@@ -337,8 +341,9 @@ class StatusContent extends React.PureComponent {
     } else {
       return (
         <div className={classNames} ref={this.setRef} tabIndex='0' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-          <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
-
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
+            <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
+          }
           {poll}
           {translateButton}
           {kobukobuButton}
