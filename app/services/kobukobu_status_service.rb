@@ -9,7 +9,7 @@ class KobukobuStatusService < BaseService
     raise Mastodon::NotPermittedError unless status.public_visibility? || status.unlisted_visibility?
 
     @status = status
-    @content = status_content_format(@status)
+    @content = extract_status_plain_text(@status)
 
     Rails.cache.fetch("kobukobu/#{@status.language}/#{content_hash}", expires_in: CACHE_TTL) { kobukobu_backend.parse(@content, @status.language) }
   end
