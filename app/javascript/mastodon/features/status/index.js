@@ -46,6 +46,9 @@ import {
   blockDomain,
   unblockDomain,
 } from '../../actions/domain_blocks';
+import {
+  dictionaryLookup,
+} from "../../actions/dictionary";
 import { initMuteModal } from '../../actions/mutes';
 import { initBlockModal } from '../../actions/blocks';
 import { initBoostModal } from '../../actions/boosts';
@@ -421,6 +424,12 @@ class Status extends ImmutablePureComponent {
     }
   }
 
+  handleDictionary = query => {
+    const { dispatch } = this.props;
+    dispatch(dictionaryLookup(query));
+  }
+
+
   handleBlockClick = (status) => {
     const { dispatch } = this.props;
     const account = status.get('account');
@@ -653,6 +662,7 @@ class Status extends ImmutablePureComponent {
                   onToggleHidden={this.handleToggleHidden}
                   onTranslate={this.handleTranslate}
                   onKobukobu={this.handleKobukobu}
+                  dictionaryLookup={this.dictionaryLookup}
                   domain={domain}
                   showMedia={this.state.showMedia}
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}

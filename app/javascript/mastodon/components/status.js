@@ -87,6 +87,7 @@ class Status extends ImmutablePureComponent {
     onToggleCollapsed: PropTypes.func,
     onTranslate: PropTypes.func,
     onKobukobu: PropTypes.func,
+    dictionaryLookup: PropTypes.func,
     onInteractionModal: PropTypes.func,
     muted: PropTypes.bool,
     hidden: PropTypes.bool,
@@ -180,6 +181,10 @@ class Status extends ImmutablePureComponent {
 
   handleKobukobu = () => {
     this.props.onKobukobu(this._properStatus());
+  }
+
+  dictionaryLookup = (query) => {
+    this.props.dictionayLookup(query);
   }
 
   renderLoadingMediaGallery () {
@@ -537,6 +542,7 @@ class Status extends ImmutablePureComponent {
               onExpandedToggle={this.handleExpandedToggle}
               onTranslate={this.handleTranslate}
               onKobukobu={this.handleKobukobu}
+              dictionaryLookup={this.dictionaryLookup}
               collapsable
               onCollapsedToggle={this.handleCollapsedToggle}
             />

@@ -9,12 +9,15 @@ class KobuKobuContent extends React.PureComponent {
   static propTypes = {
     kobukobu: ImmutablePropTypes.map,
     userLanguage: PropTypes.string,
+    dictionaryLookup: PropTypes.func,
   }
   render() {
 
-    const { kobukobu } = this.props;
+    const { kobukobu, userLanguage, dictionaryLookup } = this.props;
 
     const kobukobuJS = kobukobu.toJS();
+
+    console.log(kobukobu);
 
     if (kobukobuJS.language === 'ja') {
       return(<p>
@@ -33,6 +36,7 @@ class KobuKobuContent extends React.PureComponent {
   furigana(word) {
     return fit(word.word, toHiragana(word.transcription, { passRomaji: true }), {type: 'object'});
   }
+
 }
 
 export default KobuKobuContent;

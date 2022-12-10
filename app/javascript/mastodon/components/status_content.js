@@ -95,6 +95,7 @@ class StatusContent extends React.PureComponent {
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
     onKobukobu: PropTypes.func,
+    dictionaryLookup: PropTypes.func,
     onClick: PropTypes.func,
     collapsable: PropTypes.bool,
     onCollapsedToggle: PropTypes.func,
@@ -314,7 +315,7 @@ class StatusContent extends React.PureComponent {
 
           {mentionsPlaceholder}
 
-          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} userLanguage={intl.lang} dictionaryLookup={this.props.dictionaryLookup}/> :
             <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />
           }
 
@@ -327,7 +328,7 @@ class StatusContent extends React.PureComponent {
       return (
         <>
           <div className={classNames} ref={this.setRef} tabIndex='0' onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} key='status-content' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-            {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
+            {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} userLanguage={intl.lang} dictionaryLookup={this.props.dictionaryLookup}/> :
               <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
             }
             {poll}
@@ -341,7 +342,7 @@ class StatusContent extends React.PureComponent {
     } else {
       return (
         <div className={classNames} ref={this.setRef} tabIndex='0' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} userLanguage={intl.lang} dictionaryLookup={this.props.dictionaryLookup}/> :
             <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
           }
           {poll}
