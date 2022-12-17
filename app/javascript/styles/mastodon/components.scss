@@ -5664,6 +5664,8 @@ a.status-card.compact:hover {
 .dictionary-modal__container {
   padding: 30px;
   font-size: 16px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
 
   strong {
     font-weight: 500;
@@ -5679,8 +5681,6 @@ a.status-card.compact:hover {
     appearance: none;
     box-sizing: border-box;
     color: $inverted-text-color;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
     width: auto;
     outline: 0;
     font-family: inherit;
@@ -5752,11 +5752,16 @@ a.status-card.compact:hover {
 }
 
 .dictionary-modal__word {
-  grid-column: span 4;
+  grid-column: span 5;
+  font-size: 24px;
 }
 
 .dictionary-modal__gloss {
-  grid-column: span 8;
+  grid-column: span 7;
+}
+
+.dictionary-modal__ol {
+  list-style: decimal;
 }
 
 .report-modal__target {

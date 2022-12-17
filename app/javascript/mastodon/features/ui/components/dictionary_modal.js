@@ -21,9 +21,7 @@ class DictionaryModal extends React.PureComponent {
 
   render() {
     const { dictionaryEntries } = this.props;
-    const dictionaryEntriesJS = dictionaryEntries.toJS();
-
-    console.log(dictionaryEntriesJS);
+    const dictionaryEntriesJS = dictionaryEntries.toJS().slice(0, 10);
 
     return (
       <div className='modal-root__modal dictionary-modal'>
@@ -32,11 +30,10 @@ class DictionaryModal extends React.PureComponent {
             (<React.Fragment>
               {this.furigana(entry.k_ele, entry.r_ele)}
               <div className='dictionary-modal__gloss'>
-                <ol>
+                <ol className='dictionary-modal__ol'>
                   {entry.sense.flatMap((sense) => sense.gloss.map((gloss) => <li>{gloss.content}</li>))}
                 </ol>
               </div>
-              <hr />
             </React.Fragment>))}
         </div>
       </div>
