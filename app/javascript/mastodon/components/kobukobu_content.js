@@ -1,8 +1,8 @@
 import React from 'react';
-import { fit } from "furigana";
-import { toHiragana, isJapanese, isKana, isKatakana } from "wanakana";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import PropTypes from "prop-types";
+import { fit } from 'furigana';
+import { toHiragana, isJapanese, isKana, isKatakana } from 'wanakana';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
 
 class KobuKobuContent extends React.PureComponent {
 
@@ -14,7 +14,7 @@ class KobuKobuContent extends React.PureComponent {
 
   render() {
 
-    const { kobukobu, userLanguage, dictionaryLookup } = this.props;
+    const { kobukobu, dictionaryLookup } = this.props;
 
     const kobukobuJS = kobukobu.toJS();
 
