@@ -11,31 +11,64 @@ class KobuKobuContent extends React.PureComponent {
     userLanguage: PropTypes.string,
     dictionaryLookup: PropTypes.func,
   }
+
   render() {
 
     const { kobukobu, userLanguage, dictionaryLookup } = this.props;
 
     const kobukobuJS = kobukobu.toJS();
 
-    console.log(kobukobu);
 
     if (kobukobuJS.language === 'ja') {
-      return(<p>
-        {kobukobuJS.words.map((word, i) =>
-          !isJapanese(word.word) || !isKana(word.transcription) || isKatakana(word.word) ? word.word : this.furigana(word) ?
-            this.furigana(word).map((match, j) =>
-              match.w === match.r ? match.r : <ruby>{match.w}<rt>{match.r}</rt></ruby>) : word.word
-        )}
-      </p>);
+      return(
+        <p>
+          {kobukobuJS.words.map((word, i) =>
+            !isJapanese(word.word) || !isKana(word.transcription) ? word.word :
+              <KobuKobuWord key={word.word + i} word={word} lang={kobukobuJS.language} dictionaryLookup={dictionaryLookup} />
+          )}
+        </p>);
     } else {
-
-      return (<div>TBD</div>);
+      return (<div>KobuKobu Unavailable</div>);
     }
   }
+}
 
-  furigana(word) {
-    return fit(word.word, toHiragana(word.transcription, { passRomaji: true }), {type: 'object'});
+class KobuKobuWord extends React.PureComponent {
+  static propTypes = {
+    lang: PropTypes.string,
+    word: PropTypes.object,
+    dictionaryLookup: PropTypes.func,
+  };
+
+
+  render() {
+    const { lang, word, dictionaryLookup } = this.props;
+
+    const onDictionaryLookup = (query) => () => {
+      dictionaryLookup(query);
+    }
+
+    if (lang === 'ja') {
+      if (this.furigana() && !isKatakana(this.props.word.word)){
+        return (<span onClick={onDictionaryLookup(this.props.word.lemma)}>{
+          this.furigana().map((match, i) => match.w === match.r ? match.r : <ruby key={match.w}>{match.w}<rt>{match.r}</rt></ruby>)
+        }</span>);
+      } else {
+        return (<span onClick={onDictionaryLookup(this.props.word.lemma)}>{word.word}</span>)
+      }
+    }
+    else {
+      return (<span>{word.word}</span>);
+    }
+
+
   }
+
+  furigana() {
+    return fit(this.props.word.word, toHiragana(this.props.word.transcription, { passRomaji: true}), {type: 'object'});
+  }
+
+
 
 }
 

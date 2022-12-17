@@ -5182,6 +5182,7 @@ a.status-card.compact:hover {
 
 .boost-modal,
 .confirmation-modal,
+.dictionary-modal,
 .report-modal,
 .actions-modal,
 .mute-modal,
@@ -5221,6 +5222,7 @@ a.status-card.compact:hover {
 }
 
 .boost-modal__action-bar,
+.dictionary-modal__action-bar,
 .confirmation-modal__action-bar,
 .mute-modal__action-bar,
 .block-modal__action-bar {
@@ -5634,6 +5636,7 @@ a.status-card.compact:hover {
 }
 
 .confirmation-modal__action-bar,
+.dictionary-modal__action-bar,
 .mute-modal__action-bar,
 .block-modal__action-bar {
   .confirmation-modal__secondary-button {
@@ -5655,6 +5658,37 @@ a.status-card.compact:hover {
   &:active {
     color: darken($lighter-text-color, 4%);
     background-color: transparent;
+  }
+}
+
+.dictionary-modal__container {
+  padding: 30px;
+  font-size: 16px;
+
+  strong {
+    font-weight: 500;
+
+    @each $lang in $cjk-langs {
+      &:lang(#{$lang}) {
+        font-weight: 700;
+      }
+    }
+  }
+
+  select {
+    appearance: none;
+    box-sizing: border-box;
+    color: $inverted-text-color;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    width: auto;
+    outline: 0;
+    font-family: inherit;
+    background: $simple-background-color url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14.933 18.467' height='19.698' width='15.929'><path d='M3.467 14.967l-3.393-3.5H14.86l-3.392 3.5c-1.866 1.925-3.666 3.5-4 3.5-.335 0-2.135-1.575-4-3.5zm.266-11.234L7.467 0 11.2 3.733l3.733 3.734H0l3.733-3.734z' fill='#{hex-color(darken($simple-background-color, 14%))}'/></svg>") no-repeat right 8px center / auto 16px;
+    border: 1px solid darken($simple-background-color, 14%);
+    border-radius: 4px;
+    padding: 6px 10px;
+    padding-right: 30px;
   }
 }
 
@@ -5715,6 +5749,14 @@ a.status-card.compact:hover {
       margin-left: 8px;
     }
   }
+}
+
+.dictionary-modal__word {
+  grid-column: span 4;
+}
+
+.dictionary-modal__gloss {
+  grid-column: span 8;
 }
 
 .report-modal__target {

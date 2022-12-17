@@ -27,6 +27,7 @@ import {
   ClosedRegistrationsModal,
 } from 'mastodon/features/ui/util/async-components';
 import { Helmet } from 'react-helmet';
+import DictionaryModal from "./dictionary_modal";
 
 const MODAL_COMPONENTS = {
   'MEDIA': () => Promise.resolve({ default: MediaModal }),
@@ -35,6 +36,7 @@ const MODAL_COMPONENTS = {
   'IMAGE': () => Promise.resolve({ default: ImageModal }),
   'BOOST': () => Promise.resolve({ default: BoostModal }),
   'CONFIRM': () => Promise.resolve({ default: ConfirmationModal }),
+  'DICTIONARY': () => Promise.resolve({ default: DictionaryModal }),
   'MUTE': MuteModal,
   'BLOCK': BlockModal,
   'REPORT': ReportModal,

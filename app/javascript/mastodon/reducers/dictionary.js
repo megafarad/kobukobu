@@ -6,7 +6,7 @@ const initialState = ImmutableList([]);
 
 export default function dictionary(state = initialState, action) {
   if (action.type === DICTIONARY_LOOKUP_SUCCESS) {
-    state = ConvertToImmutable(action.words);
+    state = ConvertToImmutable(action.entries);
   }
   return state;
 }

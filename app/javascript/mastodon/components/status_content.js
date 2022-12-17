@@ -315,7 +315,7 @@ class StatusContent extends React.PureComponent {
 
           {mentionsPlaceholder}
 
-          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} userLanguage={intl.lang} dictionaryLookup={this.props.dictionaryLookup}/> :
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} userLanguage={intl.lang} dictionaryLookup={this.props.dictionaryLookup} /> :
             <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />
           }
 

@@ -39,7 +39,7 @@ class DetailedStatus extends ImmutablePureComponent {
     onToggleHidden: PropTypes.func.isRequired,
     onTranslate: PropTypes.func.isRequired,
     onKobukobu: PropTypes.func.isRequired,
-    dictionaryLookup: PropTypes.func.isRequired,
+    onDictionaryLookup: PropTypes.func.isRequired,
     measureHeight: PropTypes.bool,
     onHeightChange: PropTypes.func,
     domain: PropTypes.string.isRequired,
@@ -117,8 +117,8 @@ class DetailedStatus extends ImmutablePureComponent {
   }
 
   dictionaryLookup = (query) => {
-    const { dictionaryLookup } = this.props;
-    dictionaryLookup(query);
+    const { onDictionaryLookup } = this.props;
+    onDictionaryLookup(query);
   }
 
   render () {

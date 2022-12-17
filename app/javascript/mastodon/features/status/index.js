@@ -662,7 +662,7 @@ class Status extends ImmutablePureComponent {
                   onToggleHidden={this.handleToggleHidden}
                   onTranslate={this.handleTranslate}
                   onKobukobu={this.handleKobukobu}
-                  dictionaryLookup={this.dictionaryLookup}
+                  onDictionaryLookup={this.handleDictionary}
                   domain={domain}
                   showMedia={this.state.showMedia}
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}

@@ -6,12 +6,7 @@ class DictionaryController < ApplicationController
   rescue_from DictionaryService::NotConfiguredError, with: :not_found
   rescue_from DictionaryService::UnexpectedResponseError, DictionaryService::QuotaExceededError, DictionaryService::TooManyRequestsError, with: :service_unavailable
   def lookup
-    respond_to do |format|
-      format.json do
-        expires_in 3.minutes, public: true
-        render_with_cache json: @search_results, content_type: 'application/json'
-      end
-    end
+    render json: @search_results
   end
 
   def set_search_results
