@@ -3,31 +3,31 @@ import { openModal } from './modal';
 
 export const DICTIONARY_LOOKUP_REQUEST = 'DICTIONARY_LOOKUP_REQUEST';
 export const DICTIONARY_LOOKUP_SUCCESS = 'DICTIONARY_LOOKUP_SUCCESS';
-export const DICTIONARY_LOOKUP_FAIL ='DICTIONARY_LOOKUP_FAIL';
+export const DICTIONARY_LOOKUP_FAIL = 'DICTIONARY_LOOKUP_FAIL';
 
-export const dictionaryLookup = query  => (dispatch, getState) => {
-  dispatch(dictionaryLookupRequest(query));
+export const dictionaryLookup = word => (dispatch, getState) => {
+  dispatch(dictionaryLookupRequest(word));
 
-  api(getState).get(`/dictionary/${query}`).then(response => {
-    dispatch(dictionaryLookupSuccess(query, response.data));
+  api(getState).get(`/dictionary/${word.lemma}`).then(response => {
+    dispatch(dictionaryLookupSuccess(word, response.data));
     dispatch(openModal('DICTIONARY'));
   }).catch(error => {
-    dispatch(dictionaryLookupFail(query, error));
+    dispatch(dictionaryLookupFail(word, error));
   });
 };
-export const dictionaryLookupRequest = query => ({
+export const dictionaryLookupRequest = word => ({
   type: DICTIONARY_LOOKUP_REQUEST,
-  query,
+  word,
 });
 
-export const dictionaryLookupSuccess = (query, entries) => ({
+export const dictionaryLookupSuccess = (word, entries) => ({
   type: DICTIONARY_LOOKUP_SUCCESS,
-  query,
+  word,
   entries,
 });
 
-export const dictionaryLookupFail = (query, error) => ({
+export const dictionaryLookupFail = (word, error) => ({
   type: DICTIONARY_LOOKUP_FAIL,
-  query,
+  word,
   error,
 });

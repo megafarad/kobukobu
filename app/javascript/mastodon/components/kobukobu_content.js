@@ -44,17 +44,17 @@ class KobuKobuWord extends React.PureComponent {
   render() {
     const { lang, word, dictionaryLookup } = this.props;
 
-    const onDictionaryLookup = (query) => () => {
-      dictionaryLookup(query);
+    const onDictionaryLookup = (word) => () => {
+      dictionaryLookup(word);
     };
 
     if (lang === 'ja') {
       if (this.furigana() && !isKatakana(this.props.word.word)){
-        return (<span onClick={onDictionaryLookup(this.props.word.lemma)}>{
+        return (<span onClick={onDictionaryLookup(this.props.word)}>{
           this.furigana().map((match) => match.w === match.r ? match.r : <ruby key={match.w}>{match.w}<rt>{match.r}</rt></ruby>)
         }</span>);
       } else {
-        return (<span onClick={onDictionaryLookup(this.props.word.lemma)}>{word.word}</span>);
+        return (<span onClick={onDictionaryLookup(this.props.word)}>{word.word}</span>);
       }
     } else {
       return (<span>{word.word}</span>);

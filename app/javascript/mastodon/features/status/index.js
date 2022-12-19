@@ -424,9 +424,9 @@ class Status extends ImmutablePureComponent {
     }
   }
 
-  handleDictionary = query => {
+  handleDictionary = word => {
     const { dispatch } = this.props;
-    dispatch(dictionaryLookup(query));
+    dispatch(dictionaryLookup(word));
   }
 
 

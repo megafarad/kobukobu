@@ -5646,6 +5646,7 @@ a.status-card.compact:hover {
 
 .confirmation-modal__secondary-button,
 .confirmation-modal__cancel-button,
+.dictionary-modal__close-button,
 .mute-modal__cancel-button,
 .block-modal__cancel-button {
   background-color: transparent;
@@ -5754,10 +5755,15 @@ a.status-card.compact:hover {
 .dictionary-modal__word {
   grid-column: span 5;
   font-size: 24px;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  padding-right: 5%;
 }
 
 .dictionary-modal__gloss {
   grid-column: span 7;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }
 
 .dictionary-modal__ol {

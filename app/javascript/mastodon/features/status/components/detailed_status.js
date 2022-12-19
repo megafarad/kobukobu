@@ -116,9 +116,9 @@ class DetailedStatus extends ImmutablePureComponent {
     onKobukobu(status);
   }
 
-  dictionaryLookup = (query) => {
+  dictionaryLookup = (word) => {
     const { onDictionaryLookup } = this.props;
-    onDictionaryLookup(query);
+    onDictionaryLookup(word);
   }
 
   render () {

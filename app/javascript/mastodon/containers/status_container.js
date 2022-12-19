@@ -171,8 +171,8 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
     }
   },
 
-  onDictionaryLookup(query) {
-    dispatch(dictionaryLookup(query));
+  onDictionaryLookup(word) {
+    dispatch(dictionaryLookup(word));
   },
 
   onDirect (account, router) {

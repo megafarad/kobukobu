@@ -183,8 +183,8 @@ class Status extends ImmutablePureComponent {
     this.props.onKobukobu(this._properStatus());
   }
 
-  onDictionaryLookup = (query) => {
-    this.props.onDictionaryLookup(query);
+  onDictionaryLookup = (word) => {
+    this.props.onDictionaryLookup(word);
   }
 
   renderLoadingMediaGallery () {

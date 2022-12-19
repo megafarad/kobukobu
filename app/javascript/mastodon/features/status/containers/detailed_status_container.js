@@ -166,8 +166,8 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     }
   },
 
-  onDictionaryLookup(query) {
-    dispatch(dictionaryLookup(query));
+  onDictionaryLookup(word) {
+    dispatch(dictionaryLookup(word));
   },
 
 });
