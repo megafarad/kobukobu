@@ -5760,6 +5760,14 @@ a.status-card.compact:hover {
   padding-right: 5%;
 }
 
+.dictionary-modal__none_found {
+  grid-column: span 12;
+  font-size: 24px;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  padding-right: 5%;
+}
+
 .dictionary-modal__gloss {
   grid-column: span 7;
   padding-top: 10%;

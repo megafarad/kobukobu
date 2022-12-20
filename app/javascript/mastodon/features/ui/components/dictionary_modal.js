@@ -8,7 +8,8 @@ import Button from '../../../components/button';
 
 const makeMapStateToProps = () => {
   return (state) => ({
-    dictionaryEntries: state.get('dictionary'),
+    dictionaryEntries: state.get('dictionary').entries,
+    word: state.get('dictionary').word,
   });
 };
 export default @connect(makeMapStateToProps)
@@ -17,6 +18,7 @@ class DictionaryModal extends React.PureComponent {
 
   static propTypes = {
     dictionaryEntries: ImmutablePropTypes.list,
+    word: ImmutablePropTypes.map,
     onClose: PropTypes.func,
     intl: PropTypes.object,
   };
@@ -37,18 +39,20 @@ class DictionaryModal extends React.PureComponent {
     return (
       <div className='modal-root__modal dictionary-modal'>
         <div className='dictionary-modal__container'>
-          {this.furigana(dictionaryEntry.k_ele, dictionaryEntry.r_ele)}
-          <div className='dictionary-modal__gloss'>
-            <ol className='dictionary-modal__ol'>
-              {dictionaryEntry.sense.flatMap((sense) => sense.gloss.map((gloss, j) => <li key={j}>{gloss.content}</li>))}
-            </ol>
-          </div>
+          {(dictionaryEntry) ? <React.Fragment>{this.furigana(dictionaryEntry.k_ele, dictionaryEntry.r_ele)}
+            <div className='dictionary-modal__gloss'>
+              <ol className='dictionary-modal__ol'>
+                {dictionaryEntry.sense.flatMap((sense, i) => sense.gloss.map((gloss, j) => <li key={i * 10 + j}>{gloss.content}</li>))}
+              </ol>
+            </div></React.Fragment> : <div className='dictionary-modal__none_found'>
+              <FormattedMessage id='dictionary_modal.none_found' defaultMessage='No entries found for {word}' values={{ word: this.props.word.get('word') }} />
+            </div>}
         </div>
         <div className='dictionary-modal__action-bar'>
-          <Button onClick={this.handlePrev} disabled={this.state.currentEntry === 0}>
+          <Button onClick={this.handlePrev} disabled={this.state.currentEntry === 0 || this.props.dictionaryEntries.size === 0}>
             <FormattedMessage id='dictionary_modal.previous' defaultMessage='Previous' />
           </Button>
-          <Button onClick={this.handleNext} disabled={this.state.currentEntry === this.props.dictionaryEntries.size - 1}>
+          <Button onClick={this.handleNext} disabled={this.state.currentEntry === this.props.dictionaryEntries.size - 1 || this.props.dictionaryEntries.size === 0}>
             <FormattedMessage id='dictionary_modal.next' defaultMessage='Next' />
           </Button>
           <Button onClick={this.handleClose} className='dictionary-modal__close-button'>
