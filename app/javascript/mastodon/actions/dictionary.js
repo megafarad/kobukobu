@@ -8,7 +8,7 @@ export const DICTIONARY_LOOKUP_FAIL = 'DICTIONARY_LOOKUP_FAIL';
 export const dictionaryLookup = word => (dispatch, getState) => {
   dispatch(dictionaryLookupRequest(word));
 
-  api(getState).get(`/dictionary/${word.lemma}`).then(response => {
+  api(getState).get(`/dictionary/${word.get('lemma')}`).then(response => {
     dispatch(dictionaryLookupSuccess(word, response.data));
     dispatch(openModal('DICTIONARY'));
   }).catch(error => {

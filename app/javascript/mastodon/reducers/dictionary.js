@@ -10,10 +10,10 @@ const initialState = ImmutableMap({
 
 export default function dictionary(state = initialState, action) {
   if (action.type === DICTIONARY_LOOKUP_SUCCESS) {
-    state = {
+    state = ImmutableMap({
       entries: ConvertToImmutable(action.entries),
       word: ConvertToImmutable(action.word),
-    };
+    });
   }
   return state;
 }

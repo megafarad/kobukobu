@@ -8,8 +8,8 @@ import Button from '../../../components/button';
 
 const makeMapStateToProps = () => {
   return (state) => ({
-    dictionaryEntries: state.get('dictionary').entries,
-    word: state.get('dictionary').word,
+    dictionaryEntries: state.getIn(['dictionary', 'entries']),
+    word: state.getIn(['dictionary', 'word']),
   });
 };
 export default @connect(makeMapStateToProps)
@@ -34,18 +34,18 @@ class DictionaryModal extends React.PureComponent {
 
   render() {
     const { dictionaryEntries } = this.props;
-    const dictionaryEntry = dictionaryEntries.toJS()[this.state.currentEntry];
+    const dictionaryEntry = dictionaryEntries.get(this.state.currentEntry);
 
     return (
       <div className='modal-root__modal dictionary-modal'>
         <div className='dictionary-modal__container'>
-          {(dictionaryEntry) ? <React.Fragment>{this.furigana(dictionaryEntry.k_ele, dictionaryEntry.r_ele)}
+          {(dictionaryEntry) ? <React.Fragment>{this.furigana(dictionaryEntry.get('k_ele'), dictionaryEntry.get('r_ele'))}
             <div className='dictionary-modal__gloss'>
               <ol className='dictionary-modal__ol'>
-                {dictionaryEntry.sense.flatMap((sense, i) => sense.gloss.map((gloss, j) => <li key={i * 10 + j}>{gloss.content}</li>))}
+                {dictionaryEntry.get('sense').flatMap((sense, i) => sense.get('gloss').map((gloss, j) => <li key={i * 10 + j}>{gloss.get('content')}</li>))}
               </ol>
             </div></React.Fragment> : <div className='dictionary-modal__none_found'>
-              <FormattedMessage id='dictionary_modal.none_found' defaultMessage='No entries found for {word}' values={{ word: this.props.word.get('word') }} />
+              <FormattedMessage id='dictionary_modal.none_found' defaultMessage='No entries found for {lemma}' values={{ lemma: this.props.word.get('lemma') }} />
             </div>}
         </div>
         <div className='dictionary-modal__action-bar'>
@@ -77,16 +77,16 @@ class DictionaryModal extends React.PureComponent {
     try {
       if (k_ele) {
         return (<div className='dictionary-modal__word'>
-          {fit(k_ele[0].keb, r_ele[0].reb, { type: 'object' }).map(
+          {fit(k_ele.getIn([0, 'keb']), r_ele.getIn([0, 'reb']), { type: 'object' }).map(
             (match) => match.w === match.r ? match.r : (<ruby key={match.w}>{match.w}<rt>{match.r}</rt></ruby>),
           )}
         </div>);
       } else {
-        return (<div className='dictionary-modal__word'>{r_ele[0].reb}</div>);
+        return (<div className='dictionary-modal__word'>{r_ele.getIn([0, 'reb'])}</div>);
       }
     } catch (exception) {
       console.error('FIT error: ', exception);
-      return (<div className='dictionary-modal__word'>{r_ele[0].reb}</div>);
+      return (<div className='dictionary-modal__word'>{r_ele.getIn([0, 'reb'])}</div>);
     }
   };
 
