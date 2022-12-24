@@ -8,12 +8,6 @@ import PropTypes from 'prop-types';
 @injectIntl
 class KobuKobuContent extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      chosenWord: undefined,
-    };
-  }
   static propTypes = {
     kobukobu: ImmutablePropTypes.map,
     dictionaryLookup: PropTypes.func,
@@ -28,40 +22,54 @@ class KobuKobuContent extends React.PureComponent {
       return(<p>
         {kobukobu.get('words').map((word, i) =>
           !isJapanese(word.get('word')) || !isKana(word.get('transcription')) ? word.get('word') :
-            (<KobuKobuWord key={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup} active={i === this.state.chosenWord} />),
+            (<KobuKobuWord
+              key={i} wordNumber={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup}
+            />),
         )}
       </p>);
     } else {
-      return (<div><FormattedMessage /></div>);
+      return (<div><FormattedMessage id='kobukobu.unavailable' defaultMessage='KobuKobu Unavailable' /></div>);
     }
-  };
+  }
 
 }
 
 class KobuKobuWord extends React.PureComponent {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      highlighted: false,
+    };
+
+    this.toggleHighlight = this.toggleHighlight.bind(this);
+  }
   static propTypes = {
     lang: PropTypes.string,
     word: ImmutablePropTypes.map,
     dictionaryLookup: PropTypes.func,
-    active: PropTypes.bool,
   };
-
 
   render() {
     const { lang, word, dictionaryLookup } = this.props;
 
-    const onDictionaryLookup = (word) => () => {
+    const onDictionaryLookup = (word) => (e) => {
+      e.preventDefault();
       dictionaryLookup(word);
     };
 
     if (lang === 'ja') {
       if (this.furigana() && !isKatakana(this.props.word.get('word'))){
-        return (<span onClick={onDictionaryLookup(this.props.word)}>{
-          this.furigana().map((match) => match.w === match.r ? match.r : <ruby key={match.w}>{match.w}<rt>{match.r}</rt></ruby>)
-        }</span>);
+        return (<a
+          onClick={onDictionaryLookup(this.props.word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
+          className={this.state.highlighted ? 'kobukobu__selected' : ''}
+        >{this.furigana().map((match) => match.w === match.r ? match.r : <ruby key={match.w}>{match.w}<rt>{match.r}</rt></ruby>)}</a>);
       } else {
-        return (<span onClick={onDictionaryLookup(this.props.word)}>{word.get('word')}</span>);
+        return (<a
+          onClick={onDictionaryLookup(this.props.word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
+          className={this.state.highlighted ? 'kobukobu__selected' : ''}
+        >{word.get('word')}</a>);
       }
     } else {
       return (<span>{word.get('word')}</span>);
@@ -72,7 +80,9 @@ class KobuKobuWord extends React.PureComponent {
     return fit(this.props.word.get('word'), toHiragana(this.props.word.get('transcription'), { passRomaji: true }), { type: 'object' });
   }
 
-
+  toggleHighlight = () => {
+    this.setState({ highlighted: !this.state.highlighted });
+  };
 
 }
 

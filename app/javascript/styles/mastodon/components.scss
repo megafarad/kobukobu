@@ -811,6 +811,11 @@
   margin-right: 5px;
 }
 
+.kobukobu__selected {
+  color: $inverted-text-color;
+  background-color: $highlight-text-color;
+}
+
 .status__content--with-action {
   cursor: pointer;
 }

@@ -27,7 +27,7 @@ import {
   ClosedRegistrationsModal,
 } from 'mastodon/features/ui/util/async-components';
 import { Helmet } from 'react-helmet';
-import DictionaryModal from "./dictionary_modal";
+import DictionaryModal from './dictionary_modal';
 
 const MODAL_COMPONENTS = {
   'MEDIA': () => Promise.resolve({ default: MediaModal }),
