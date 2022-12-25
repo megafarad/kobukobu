@@ -812,7 +812,7 @@
 }
 
 .kobukobu__selected {
-  color: $inverted-text-color;
+  color: $darker-text-color;
   background-color: $highlight-text-color;
 }
 
@@ -5779,8 +5779,11 @@ a.status-card.compact:hover {
   padding-bottom: 10%;
 }
 
-.dictionary-modal__ol {
-  list-style: decimal;
+.dictionary-modal__gloss_pos {
+  color: $darker-text-color;
+  font-size: 13px;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .report-modal__target {

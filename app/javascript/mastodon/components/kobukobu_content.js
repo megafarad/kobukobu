@@ -23,7 +23,7 @@ class KobuKobuContent extends React.PureComponent {
         {kobukobu.get('words').map((word, i) =>
           !isJapanese(word.get('word')) || !isKana(word.get('transcription')) ? word.get('word') :
             (<KobuKobuWord
-              key={i} wordNumber={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup}
+              key={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup}
             />),
         )}
       </p>);
@@ -60,15 +60,17 @@ class KobuKobuWord extends React.PureComponent {
     };
 
     if (lang === 'ja') {
-      if (this.furigana() && !isKatakana(this.props.word.get('word'))){
+      if (this.furigana() && !isKatakana(word.get('word'))){
         return (<a
-          onClick={onDictionaryLookup(this.props.word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
-          className={this.state.highlighted ? 'kobukobu__selected' : ''}
-        >{this.furigana().map((match) => match.w === match.r ? match.r : <ruby key={match.w}>{match.w}<rt>{match.r}</rt></ruby>)}</a>);
+          onClick={onDictionaryLookup(word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
+          className={this.state.highlighted ? 'kobukobu__selected' : 'status-link unhandled-link'} href={'/dictionary/' + word.get('lemma')}
+          title={word.get('lemma')}
+        >{this.furigana().map((match, i) => match.w === match.r ? match.r : <ruby key={i}>{match.w}<rt>{match.r}</rt></ruby>)}</a>);
       } else {
         return (<a
-          onClick={onDictionaryLookup(this.props.word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
-          className={this.state.highlighted ? 'kobukobu__selected' : ''}
+          onClick={onDictionaryLookup(word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
+          className={this.state.highlighted ? 'kobukobu__selected' : 'status-link unhandled-link'} href={'/dictionary/' + word.get('lemma')}
+          title={word.get('lemma')}
         >{word.get('word')}</a>);
       }
     } else {

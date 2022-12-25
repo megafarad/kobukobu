@@ -41,9 +41,13 @@ class DictionaryModal extends React.PureComponent {
         <div className='dictionary-modal__container'>
           {(dictionaryEntry) ? <React.Fragment>{this.furigana(dictionaryEntry.get('k_ele'), dictionaryEntry.get('r_ele'))}
             <div className='dictionary-modal__gloss'>
-              <ol className='dictionary-modal__ol'>
-                {dictionaryEntry.get('sense').flatMap((sense, i) => sense.get('gloss').map((gloss, j) => <li key={i * 10 + j}>{gloss.get('content')}</li>))}
-              </ol>
+              <div>
+                {dictionaryEntry.get('sense').map((sense, i) =>
+                  (<React.Fragment key={i}>
+                    <div className='dictionary-modal__gloss_pos'>{sense.get('pos').join(', ')}</div>
+                    <div>{i + 1}. {sense.get('gloss').map((gloss) => gloss.get('content')).join('; ')}</div>
+                  </React.Fragment>))}
+              </div>
             </div></React.Fragment> : <div className='dictionary-modal__none_found'>
               <FormattedMessage id='dictionary_modal.none_found' defaultMessage='No entries found for {lemma}' values={{ lemma: this.props.word.get('lemma') }} />
             </div>}
