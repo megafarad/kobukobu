@@ -21,7 +21,7 @@ class KobuKobuContent extends React.PureComponent {
     if (kobukobu.get('language') === 'ja') {
       return(<p>
         {kobukobu.get('words').map((word, i) =>
-          !isJapanese(word.get('word'), /[0-9]/)  || /^[0-9]$/.test(word.get('word')) ? word.get('word') :
+          !isJapanese(word.get('word'), /[0-9]/) || /^[0-9]+$/.test(word.get('word')) ? word.get('word') :
             (<KobuKobuWord
               key={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup}
             />),
