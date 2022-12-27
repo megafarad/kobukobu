@@ -21,7 +21,7 @@ class KobuKobuContent extends React.PureComponent {
     if (kobukobu.get('language') === 'ja') {
       return(<p>
         {kobukobu.get('words').map((word, i) =>
-          !isJapanese(word.get('word')) || !isKana(word.get('transcription')) ? word.get('word') :
+          !isJapanese(word.get('word'), /[0-9]/) ? word.get('word') :
             (<KobuKobuWord
               key={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup}
             />),
@@ -59,27 +59,29 @@ class KobuKobuWord extends React.PureComponent {
       dictionaryLookup(word);
     };
 
-    if (lang === 'ja') {
-      if (this.furigana() && !isKatakana(word.get('word'))){
-        return (<a
-          onClick={onDictionaryLookup(word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
-          className={this.state.highlighted ? 'kobukobu__selected' : 'status-link unhandled-link'} href={'/dictionary/' + word.get('lemma')}
-          title={word.get('lemma')}
-        >{this.furigana().map((match, i) => match.w === match.r ? match.r : <ruby key={i}>{match.w}<rt>{match.r}</rt></ruby>)}</a>);
-      } else {
-        return (<a
-          onClick={onDictionaryLookup(word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
-          className={this.state.highlighted ? 'kobukobu__selected' : 'status-link unhandled-link'} href={'/dictionary/' + word.get('lemma')}
-          title={word.get('lemma')}
-        >{word.get('word')}</a>);
-      }
+    const wordLemma = !isKatakana(word.get('transcription')) ? word.get('word') : word.get('lemma');
+
+    if (lang === 'ja' && (word.get('partOfSpeech') !== 'Symbol')) {
+      const displayWord = (this.furigana() && !isKatakana(word.get('word'))) ?
+        this.furigana().map((match, i) => match.w === match.r ? match.r : <ruby key={i}>{match.w}<rt>{match.r}</rt></ruby>) :
+        word.get('word');
+      return (<a
+        onClick={onDictionaryLookup(word)} onMouseDown={this.toggleHighlight} onMouseUp={this.toggleHighlight}
+        className={this.state.highlighted ? 'kobukobu__selected' : 'status-link unhandled-link'} href={'/dictionary/' + wordLemma}
+        title={wordLemma}
+      >{displayWord}</a>);
     } else {
       return (<span>{word.get('word')}</span>);
     }
   }
 
   furigana() {
-    return fit(this.props.word.get('word'), toHiragana(this.props.word.get('transcription'), { passRomaji: true }), { type: 'object' });
+    try {
+      return fit(this.props.word.get('word'), toHiragana(this.props.word.get('transcription'), { passRomaji: true }), { type: 'object' });
+    } catch (e) {
+      return undefined;
+    }
+
   }
 
   toggleHighlight = () => {
