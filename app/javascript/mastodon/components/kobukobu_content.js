@@ -1,6 +1,6 @@
 import React from 'react';
 import { fit } from 'furigana';
-import { toHiragana, isJapanese, isKana, isKatakana } from 'wanakana';
+import { toHiragana, isJapanese, isKatakana } from 'wanakana';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
@@ -21,7 +21,7 @@ class KobuKobuContent extends React.PureComponent {
     if (kobukobu.get('language') === 'ja') {
       return(<p>
         {kobukobu.get('words').map((word, i) =>
-          !isJapanese(word.get('word'), /[0-9]/) ? word.get('word') :
+          !isJapanese(word.get('word'), /[0-9]/)  || /^[0-9]$/.test(word.get('word')) ? word.get('word') :
             (<KobuKobuWord
               key={i} word={word} lang={kobukobu.get('language')} dictionaryLookup={dictionaryLookup}
             />),
