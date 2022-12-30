@@ -8,7 +8,12 @@ export const DICTIONARY_LOOKUP_FAIL = 'DICTIONARY_LOOKUP_FAIL';
 export const dictionaryLookup = word => (dispatch, getState) => {
   dispatch(dictionaryLookupRequest(word));
 
-  api(getState).get(`/dictionary/${word.get('lemma').replace('*', '')}`).then(response => {
+  const lemma = word.get('lemma');
+  const partOfSpeech = word.get('partOfSpeech');
+
+  const query = (partOfSpeech === 'Verb' && lemma.slice(lemma.length - 2) === 'する') ? lemma.slice(0, lemma.length - 2) : lemma;
+
+  api(getState).get(`/dictionary/${query.replace('*', '')}`).then(response => {
     dispatch(dictionaryLookupSuccess(word, response.data));
     dispatch(openModal('DICTIONARY'));
   }).catch(error => {
