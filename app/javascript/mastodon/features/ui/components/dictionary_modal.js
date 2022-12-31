@@ -33,12 +33,21 @@ class DictionaryModal extends React.PureComponent {
   }
 
   render() {
-    const { dictionaryEntries } = this.props;
+    const { dictionaryEntries, word } = this.props;
     const dictionaryEntry = dictionaryEntries.get(this.state.currentEntry);
+
+    const inflectionPanel =
+      (<div className='dictionary-modal__inflection'>{word.get('partOfSpeech') === 'Verb' &&
+      word.get('word') !== word.get('lemma') ? (<FormattedMessage
+          id='dictionary_modal.inflection'
+          defaultMessage='{word} appears to be an inflection of {lemma}.'
+          values={{ word: word.get('word'), lemma: word.get('lemma') }}
+      />) : ''}</div>);
 
     return (
       <div className='modal-root__modal dictionary-modal'>
         <div className='dictionary-modal__container'>
+          { inflectionPanel }
           {(dictionaryEntry) ? <React.Fragment>{this.furigana(dictionaryEntry.get('k_ele'), dictionaryEntry.get('r_ele'))}
             <div className='dictionary-modal__gloss'>
               <div>
@@ -48,9 +57,11 @@ class DictionaryModal extends React.PureComponent {
                     <div>{i + 1}. {sense.get('gloss').map((gloss) => gloss.get('content')).join('; ')}</div>
                   </React.Fragment>))}
               </div>
-            </div></React.Fragment> : <div className='dictionary-modal__none_found'>
-              <FormattedMessage id='dictionary_modal.none_found' defaultMessage='No entries found for {lemma}' values={{ lemma: this.props.word.get('lemma') }} />
-            </div>}
+            </div>
+          </React.Fragment> :
+            (<div className='dictionary-modal__none_found'>
+              <FormattedMessage id='dictionary_modal.none_found' defaultMessage='No entries found for {lemma}' values={{ lemma: word.get('lemma') }} />
+            </div>)}
         </div>
         <div className='dictionary-modal__action-bar'>
           <Button onClick={this.handlePrev} disabled={this.state.currentEntry === 0 || this.props.dictionaryEntries.size === 0}>

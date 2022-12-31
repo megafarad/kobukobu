@@ -11,7 +11,8 @@ export const dictionaryLookup = word => (dispatch, getState) => {
   const lemma = word.get('lemma');
   const partOfSpeech = word.get('partOfSpeech');
 
-  const query = (partOfSpeech === 'Verb' && lemma.slice(lemma.length - 2) === 'する') ? lemma.slice(0, lemma.length - 2) : lemma;
+  const query = (partOfSpeech === 'Verb' && lemma.slice(lemma.length - 2) === 'する' && lemma !== 'する')
+    ? lemma.slice(0, lemma.length - 2) : (lemma === '*' ? word.get('word') : lemma);
 
   api(getState).get(`/dictionary/${query.replace('*', '')}`).then(response => {
     dispatch(dictionaryLookupSuccess(word, response.data));
