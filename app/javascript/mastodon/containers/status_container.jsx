@@ -28,7 +28,7 @@ import {
   translateStatus,
   undoStatusTranslation,
   kobukobuStatus,
-  undoStatusKobukobu
+  undoStatusKobukobu,
 } from '../actions/statuses';
 import {
   unmuteAccount,
@@ -50,6 +50,7 @@ import { deployPictureInPicture } from '../actions/picture_in_picture';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import { boostModal, deleteModal } from '../initial_state';
 import { showAlertForError } from '../actions/alerts';
+import { dictionaryLookup } from '../actions/dictionary';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
@@ -181,6 +182,10 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
     } else {
       dispatch(kobukobuStatus(status.get('id')));
     }
+  },
+
+  onDictionaryLookup(word) {
+    dispatch(dictionaryLookup(word));
   },
 
   onDirect (account, router) {

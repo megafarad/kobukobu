@@ -40,7 +40,7 @@ import picture_in_picture from './picture_in_picture';
 import accounts_map from './accounts_map';
 import history from './history';
 import tags from './tags';
-import followed_tags from './followed_tags';
+import dictionary from './dictionary';
 
 const reducers = {
   announcements,
@@ -84,7 +84,7 @@ const reducers = {
   picture_in_picture,
   history,
   tags,
-  followed_tags,
+  dictionary,
 };
 
 export default combineReducers(reducers);

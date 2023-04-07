@@ -29,6 +29,7 @@ import { openModal } from '../../../actions/modal';
 import { defineMessages, injectIntl } from 'react-intl';
 import { boostModal, deleteModal } from '../../../initial_state';
 import { showAlertForError } from '../../../actions/alerts';
+import { dictionaryLookup } from '../../../actions/dictionary';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
@@ -163,6 +164,10 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     } else {
       dispatch(hideStatus(status.get('id')));
     }
+  },
+
+  onDictionaryLookup(word) {
+    dispatch(dictionaryLookup(word));
   },
 
 });

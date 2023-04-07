@@ -38,6 +38,7 @@ class DetailedStatus extends ImmutablePureComponent {
     onToggleHidden: PropTypes.func.isRequired,
     onTranslate: PropTypes.func.isRequired,
     onKobukobu: PropTypes.func.isRequired,
+    onDictionaryLookup: PropTypes.func.isRequired,
     measureHeight: PropTypes.bool,
     onHeightChange: PropTypes.func,
     domain: PropTypes.string.isRequired,
@@ -112,12 +113,12 @@ class DetailedStatus extends ImmutablePureComponent {
   handleKobukobu = () => {
     const { onKobukobu, status } = this.props;
     onKobukobu(status);
-  }
+  };
 
-  handleKobukobu = () => {
-    const { onKobukobu, status } = this.props;
-    onKobukobu(status);
-  }
+  dictionaryLookup = (word) => {
+    const { onDictionaryLookup } = this.props;
+    onDictionaryLookup(word);
+  };
 
   render () {
     const status = (this.props.status && this.props.status.get('reblog')) ? this.props.status.get('reblog') : this.props.status;
@@ -291,6 +292,7 @@ class DetailedStatus extends ImmutablePureComponent {
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}
             onKobukobu={this.handleKobukobu}
+            dictionaryLookup={this.dictionaryLookup}
           />
 
           {media}

@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
 import Icon from 'mastodon/components/icon';
-import { autoPlayGif, languages as preloadedLanguages, translationEnabled, kobukobuEnabled } from 'mastodon/initial_state';
-import KobuKobuContent from "./kobukobu_content";
+import { autoPlayGif, languages as preloadedLanguages, kobukobuEnabled } from 'mastodon/initial_state';
+import KobuKobuContent from './kobukobu_content';
 
 const MAX_HEIGHT = 706; // 22px * 32 (+ 2px padding at the top)
 
 class KobuKobuButton extends React.PureComponent {
+
   static propTypes = {
     kobukobu: ImmutablePropTypes.map,
     onClick: PropTypes.func,
@@ -27,7 +28,7 @@ class KobuKobuButton extends React.PureComponent {
       return (
         <div className='translate-button'>
           <div className='translate-button__meta'>
-            <FormattedMessage id='status.kobukobu_parsed' defaultMessage='Parsed {lang} courtesy of KobuKobu' values={{ lang: languageName }}/>
+            <FormattedMessage id='status.kobukobu_parsed' defaultMessage='Parsed {lang} courtesy of KobuKobu' values={{ lang: languageName }} />
           </div>
 
           <button className='link-button' onClick={onClick}>
@@ -43,6 +44,7 @@ class KobuKobuButton extends React.PureComponent {
     );
 
   }
+
 }
 
 class TranslateButton extends React.PureComponent {
@@ -99,6 +101,7 @@ class StatusContent extends React.PureComponent {
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
     onKobukobu: PropTypes.func,
+    dictionaryLookup: PropTypes.func,
     onClick: PropTypes.func,
     collapsable: PropTypes.bool,
     onCollapsedToggle: PropTypes.func,
@@ -253,15 +256,7 @@ class StatusContent extends React.PureComponent {
 
   handleKobukobu = () => {
     this.props.onKobukobu();
-  }
-
-  handleKobukobu = () => {
-    this.props.onKobukobu();
-  }
-
-  handleKobukobu = () => {
-    this.props.onKobukobu();
-  }
+  };
 
   setRef = (c) => {
     this.node = c;
@@ -329,8 +324,8 @@ class StatusContent extends React.PureComponent {
 
           {mentionsPlaceholder}
 
-          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
-            <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} dictionaryLookup={this.props.dictionaryLookup} /> :
+            (<div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />)
           }
 
           {!hidden && poll}
@@ -342,8 +337,8 @@ class StatusContent extends React.PureComponent {
       return (
         <>
           <div className={classNames} ref={this.setRef} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} key='status-content' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-            {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
-              <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
+            {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} dictionaryLookup={this.props.dictionaryLookup} /> :
+              (<div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />)
             }
             {poll}
             {translateButton}
@@ -356,8 +351,8 @@ class StatusContent extends React.PureComponent {
     } else {
       return (
         <div className={classNames} ref={this.setRef} tabIndex={0} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')}/> :
-            <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
+          {status.get('kobukobu') ? <KobuKobuContent kobukobu={status.get('kobukobu')} dictionaryLookup={this.props.dictionaryLookup} /> :
+            (<div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />)
           }
           {poll}
           {translateButton}
