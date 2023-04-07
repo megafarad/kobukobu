@@ -429,6 +429,16 @@ class Status extends ImmutablePureComponent {
     }
   }
 
+  handleKobukobu = status => {
+    const { dispatch } = this.props;
+
+    if (status.get('kobukobu')) {
+      dispatch(undoStatusKobukobu(status.get('id')));
+    } else {
+      dispatch(kobukobuStatus(status.get('id')));
+    }
+  }
+
   handleBlockClick = (status) => {
     const { dispatch } = this.props;
     const account = status.get('account');

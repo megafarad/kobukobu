@@ -259,6 +259,10 @@ class StatusContent extends React.PureComponent {
     this.props.onKobukobu();
   }
 
+  handleKobukobu = () => {
+    this.props.onKobukobu();
+  }
+
   setRef = (c) => {
     this.node = c;
   };

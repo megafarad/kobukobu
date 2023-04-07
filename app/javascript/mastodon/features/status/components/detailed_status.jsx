@@ -114,6 +114,11 @@ class DetailedStatus extends ImmutablePureComponent {
     onKobukobu(status);
   }
 
+  handleKobukobu = () => {
+    const { onKobukobu, status } = this.props;
+    onKobukobu(status);
+  }
+
   render () {
     const status = (this.props.status && this.props.status.get('reblog')) ? this.props.status.get('reblog') : this.props.status;
     const outerStyle = { boxSizing: 'border-box' };

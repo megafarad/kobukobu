@@ -182,6 +182,10 @@ class Status extends ImmutablePureComponent {
     this.props.onKobukobu(this._properStatus());
   }
 
+  handleKobukobu = () => {
+    this.props.onKobukobu(this._properStatus());
+  }
+
   renderLoadingMediaGallery () {
     return <div className='media-gallery' style={{ height: '110px' }} />;
   }
