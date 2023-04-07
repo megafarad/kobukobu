@@ -5,17 +5,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { createSelector } from 'reselect';
-import {
-  fetchStatus,
-  muteStatus,
-  unmuteStatus,
-  deleteStatus,
-  editStatus,
-  hideStatus,
-  revealStatus,
-  translateStatus,
-  undoStatusTranslation,
-} from '../../actions/statuses';
 import MissingIndicator from '../../components/missing_indicator';
 import LoadingIndicator from 'mastodon/components/loading_indicator';
 import DetailedStatus from './components/detailed_status';
@@ -37,6 +26,7 @@ import {
   directCompose,
 } from '../../actions/compose';
 import {
+  fetchStatus,
   muteStatus,
   unmuteStatus,
   deleteStatus,
@@ -46,7 +36,7 @@ import {
   translateStatus,
   undoStatusTranslation,
   kobukobuStatus,
-  undoStatusKobukobu
+  undoStatusKobukobu,
 } from '../../actions/statuses';
 import {
   unblockAccount,
@@ -427,17 +417,7 @@ class Status extends ImmutablePureComponent {
     } else {
       dispatch(kobukobuStatus(status.get('id')));
     }
-  }
-
-  handleKobukobu = status => {
-    const { dispatch } = this.props;
-
-    if (status.get('kobukobu')) {
-      dispatch(undoStatusKobukobu(status.get('id')));
-    } else {
-      dispatch(kobukobuStatus(status.get('id')));
-    }
-  }
+  };
 
   handleBlockClick = (status) => {
     const { dispatch } = this.props;
