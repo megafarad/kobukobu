@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
 import Icon from 'mastodon/components/icon';
-import { autoPlayGif, languages as preloadedLanguages } from 'mastodon/initial_state';
 import { autoPlayGif, languages as preloadedLanguages, translationEnabled, kobukobuEnabled } from 'mastodon/initial_state';
 import KobuKobuContent from "./kobukobu_content";
 
@@ -256,6 +255,10 @@ class StatusContent extends React.PureComponent {
     this.props.onKobukobu();
   }
 
+  handleKobukobu = () => {
+    this.props.onKobukobu();
+  }
+
   setRef = (c) => {
     this.node = c;
   };
@@ -265,7 +268,6 @@ class StatusContent extends React.PureComponent {
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const renderReadMore = this.props.onClick && status.get('collapsed');
-    const renderTranslate = translationEnabled && this.context.identity.signedIn && this.props.onTranslate && ['public', 'unlisted'].includes(status.get('visibility')) && status.get('contentHtml').length > 0 && status.get('language') !== null && intl.locale !== status.get('language');
     const renderKobukobu = kobukobuEnabled && this.context.identity.signedIn && this.props.onKobukobu && ['public', 'unlisted'].includes(status.get('visibility')) && status.get('contentHtml').length > 0 && status.get('language') !== null && intl.locale !== status.get('language');
     const contentLocale = intl.locale.replace(/[_-].*/, '');
     const targetLanguages = this.props.languages?.get(status.get('language') || 'und');
