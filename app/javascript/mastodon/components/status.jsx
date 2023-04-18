@@ -553,7 +553,7 @@ class Status extends ImmutablePureComponent {
               onTranslate={this.handleTranslate}
               onKobukobu={this.handleKobukobu}
               dictionaryLookup={this.onDictionaryLookup}
-              collapsable
+              collapsible
               onCollapsedToggle={this.handleCollapsedToggle}
             />
 
