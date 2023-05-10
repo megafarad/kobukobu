@@ -8,11 +8,9 @@ class DictionaryService
   class UnexpectedResponseError < Error; end
 
   def self.configured
-    if ENV['JMDICT_BASE_URL'].present?
-      DictionaryService::Dictionary.new(ENV['JMDICT_BASE_URL'])
-    else
-      raise NotConfiguredError
-    end
+    raise NotConfiguredError if ENV['JMDICT_BASE_URL'].blank?
+
+    DictionaryService::Dictionary.new(ENV.fetch('JMDICT_BASE_URL', nil))
   end
 
   def self.configured?

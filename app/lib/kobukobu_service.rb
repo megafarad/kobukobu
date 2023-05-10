@@ -8,11 +8,9 @@ class KobukobuService
   class UnexpectedResponseError < Error; end
 
   def self.configured
-    if ENV['VE_BASE_URL'].present?
-      KobukobuService::Kobukobu.new(ENV['VE_BASE_URL'])
-    else
-      raise NotConfiguredError
-    end
+    raise NotConfiguredError if ENV['VE_BASE_URL'].blank?
+
+    KobukobuService::Kobukobu.new(ENV.fetch('VE_BASE_URL', nil))
   end
 
   def self.configured?
@@ -22,5 +20,4 @@ class KobukobuService
   def parse(_text, _source_language)
     raise NotImplementedError
   end
-
 end

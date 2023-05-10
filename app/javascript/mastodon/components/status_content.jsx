@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
-import Icon from 'mastodon/components/icon';
+import { Icon }  from 'mastodon/components/icon';
 import { autoPlayGif, languages as preloadedLanguages, kobukobuEnabled } from 'mastodon/initial_state';
 import KobuKobuContent from './kobukobu_content';
 
@@ -142,7 +142,7 @@ class StatusContent extends React.PureComponent {
         link.setAttribute('href', `/@${mention.get('acct')}`);
       } else if (link.textContent[0] === '#' || (link.previousSibling && link.previousSibling.textContent && link.previousSibling.textContent[link.previousSibling.textContent.length - 1] === '#')) {
         link.addEventListener('click', this.onHashtagClick.bind(this, link.text), false);
-        link.setAttribute('href', `/tags/${link.text.slice(1)}`);
+        link.setAttribute('href', `/tags/${link.text.replace(/^#/, '')}`);
       } else {
         link.setAttribute('title', link.href);
         link.classList.add('unhandled-link');

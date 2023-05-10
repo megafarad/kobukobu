@@ -9,6 +9,9 @@ module.exports = (api) => {
     loose: true,
     modules: false,
     debug: false,
+    include: [
+      'proposal-numeric-separator',
+    ],
   };
 
   const config = {
@@ -22,6 +25,9 @@ module.exports = (api) => {
       'preval',
       '@babel/plugin-proposal-optional-chaining',
       '@babel/plugin-proposal-nullish-coalescing-operator',
+      [
+        require('@babel/plugin-proposal-decorators').default, { legacy: true }
+      ],
     ],
     overrides: [
       {

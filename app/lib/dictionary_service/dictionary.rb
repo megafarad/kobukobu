@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class DictionaryService::Dictionary < DictionaryService
-
   def initialize(base_url)
     super()
     @base_url = base_url
@@ -20,7 +19,6 @@ class DictionaryService::Dictionary < DictionaryService
         raise UnexpectedResponseError
       end
     end
-
   end
 
   def request(word)
