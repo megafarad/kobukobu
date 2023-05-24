@@ -1,18 +1,22 @@
-import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
+import { PureComponent } from 'react';
+
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+
 import classnames from 'classnames';
-import PollContainer from 'mastodon/containers/poll_container';
+import { Link } from 'react-router-dom';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { connect } from 'react-redux';
+
 import { Icon }  from 'mastodon/components/icon';
+import PollContainer from 'mastodon/containers/poll_container';
 import { autoPlayGif, languages as preloadedLanguages, kobukobuEnabled } from 'mastodon/initial_state';
 import KobuKobuContent from './kobukobu_content';
 
 const MAX_HEIGHT = 706; // 22px * 32 (+ 2px padding at the top)
 
-class KobuKobuButton extends React.PureComponent {
+class KobuKobuButton extends PureComponent {
 
   static propTypes = {
     kobukobu: ImmutablePropTypes.map,
@@ -47,7 +51,7 @@ class KobuKobuButton extends React.PureComponent {
 
 }
 
-class TranslateButton extends React.PureComponent {
+class TranslateButton extends PureComponent {
 
   static propTypes = {
     translation: ImmutablePropTypes.map,
@@ -88,7 +92,7 @@ const mapStateToProps = state => ({
   languages: state.getIn(['server', 'translationLanguages', 'items']),
 });
 
-class StatusContent extends React.PureComponent {
+class StatusContent extends PureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
